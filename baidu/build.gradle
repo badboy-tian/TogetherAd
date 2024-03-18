@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.kezong.fat-aar'
 
 // JitPack Maven
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 // Your Group
 group = 'com.github.ifmvo'
 
@@ -35,4 +35,17 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api project(':core')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.ifmvo'
+                artifactId = 'baidu'
+                version = '1.0'
+            }
+        }
+    }
 }

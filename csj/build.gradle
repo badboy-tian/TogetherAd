@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.kezong.fat-aar'
 
 // JitPack Maven
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 // Your Group
 group = 'com.github.ifmvo'
 
@@ -32,8 +32,26 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation "com.pangle.cn:mediation-sdk:5.9.2.8"
 //    embed(name: 'open_ad_sdk_5.6.0.2', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api project(':core')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.github.ifmvo'
+                artifactId = 'csj'
+                version = '1.0'
+            }
+        }
+    }
 }
